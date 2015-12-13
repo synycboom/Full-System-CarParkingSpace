@@ -1,0 +1,6 @@
+!#/bin/bash
+
+node upload_image_watcher.js &
+node cropped_image_watcher.js &
+node xprediction_service.js &
+node fragmented_image_watcher.js 
