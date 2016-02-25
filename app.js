@@ -2,8 +2,10 @@ var express = require("express");
 var showInfo = require( __dirname + "/view/show.js");
 var app = express();
 var upload_router = require( __dirname + "/controllers/pictures");
+var slot_config_router = require( __dirname + "/controllers/slot_config");
 
 app.use("/api/upload", upload_router);
+app.use("/api/config",slot_config_router);
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);

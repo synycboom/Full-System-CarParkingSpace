@@ -1,13 +1,15 @@
-var absolutePath = "/home/CarParkingNode/";
+// var absolutePath = "/home/CarParkingNode/";
+var absolutePath = "/Users/synycboom/Desktop/CarParkingNode/";
 module.exports = {
 	/**************************************** Absolute Path *******************************************/
-	absolutePath: "/home/CarParkingNode/",
+	// absolutePath: "/home/CarParkingNode/",
+	absolutePath: "/Users/synycboom/Desktop/CarParkingNode/",
 	/******************************************* Folders **********************************************/
 	fragmentFolder: absolutePath + "fragmented_images/",
 	cropFolder: absolutePath + "cropped_images/",
 	predictFolder: absolutePath + "predicted_output/",
 	tempFolder: absolutePath + "temp/",
-	ymlFolder: absolutePath + "yml_files/",
+	configFolder: absolutePath + "config/",
 	uploadFolder: absolutePath + "upload/",
 
 	trainingSetFolder: absolutePath + "traning_set/",
@@ -16,10 +18,12 @@ module.exports = {
 
 	/******************************************* Files ***********************************************/
 	
-	dictionaryFile: absolutePath + "yml_files/dictionary.yml",
-	descriptorFile: absolutePath + "yml_files/descriptor.yml",
-	labelFile: absolutePath + "yml_files/label.yml",
+	dictionaryFile: absolutePath + "config/dictionary.yml",
+	modelFile: absolutePath + "config/descriptor.model",
+	csvFile: absolutePath + "config/slot_pos.csv",
+	csvDispFile: absolutePath + "config/disp.csv",
 
+	natsortFile: "./natsort",
 	carSetAmount: 114,
 	notCarSetAmount: 107,
 
