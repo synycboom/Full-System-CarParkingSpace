@@ -60,13 +60,15 @@ function onStartSiftNow(err,inputPath){
 		return false;
 	}
 	console.log("fragment success");
-	var outputPath = setting.tempFolder + "sift.des";
+	var fileName = inputPath.replace(setting.fragmentFolder,"").replace("_croped/","") ;
+	var outputPath = setting.tempFolder + fileName;
 	sift.extractFeature(inputPath,outputPath,onStartSVNNow);
 }
 
 function onStartSVNNow(err, inputFile){	
 	console.log("sift success");
-	var outputPath = setting.tempFolder + "output";
+	var fileName = inputFile.replace(setting.tempFolder,"");
+	var outputPath = setting.tempFolder + fileName + "_result";
 	svm.predict(inputFile,outputPath,onSVMSuccess);
 }
 
