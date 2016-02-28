@@ -15,10 +15,7 @@ var method = {
 			}
 			allFilesPath.push("../../public/cropped_images/" + data[i]);
 			allFiles.push(data[i]);
-			// console.log(data[i]);
-			// console.log(data);
 		}
-		// console.log(allFiles);
 		
 		var html_head = 
 			"<html>\n"+
@@ -33,7 +30,7 @@ var method = {
 			html_body += "<figure> \n";
 			html_body += 	"<img src='" + allFilesPath[i] + "' alt='" + allFiles[i] + "'>\n";
 			html_body +=		"<figcaption> \n";
-			html_body +=			"File: " + allFiles[i] + "\n";
+			html_body +=			"<a href='edit/" + allFiles[i] + "'>File : " + allFiles[i] + "</a>\n";
 			html_body +=		"</figcaption> \n";
 			html_body += "</figure> </br></br>\n";
 		}

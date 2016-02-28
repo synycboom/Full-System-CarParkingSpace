@@ -23,12 +23,24 @@ router.get('/save_display', function(req, res) {
 	console.log(dataObj);
 	for(key in dataObj){
 		dataArr.push(dataObj[key].split(","));
-
 	}
 
 	_csv.from.array(dataArr).to.path(setting.csvDispFile);
 });
 
+// router.get('/:uid/files', function(req, res){
+//     var uid = req.params.uid,
+//         path = req.params[0] ? req.params[0] : 'index.html';
+//     // res.sendfile(path, {root: './public'});
+//     console.log(path);
+// });
+
+router.get('/:name/*', function(req, res) {
+    var name = req.params.name;
+    console.log(name);
+    res.send("asdasd");
+    // res.render(name);
+});
 
 router.get('/load', function(req,res){
 	var _csv = csv();

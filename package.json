@@ -11,6 +11,7 @@
     "csv-parse": "^1.0.2",
     "csv-stringify": "^1.0.2",
     "delivery": "0.0.3",
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.2.9",

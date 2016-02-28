@@ -24,9 +24,7 @@ module.exports = {
 	csvDispFile: absolutePath + "config/disp.csv",
 
 	natsortFile: "./natsort",
-	carSetAmount: 114,
-	notCarSetAmount: 107,
-
+	
 	/******************************************* other ***********************************************/
-	connectionPort: "5555"
+	port: 3000
 }
