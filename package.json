@@ -13,6 +13,7 @@
     "delivery": "0.0.3",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
+    "image-size": "^0.4.0",
     "mkdirp": "^0.5.1",
     "mongoose": "^4.2.9",
     "multer": "^1.1.0",

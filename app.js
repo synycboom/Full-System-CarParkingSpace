@@ -3,9 +3,9 @@ var setting = require("./setting.js");
 var path = require('path');
 var app = express();
 
-var upload_router = require( __dirname + "/controllers/pictures");
-var slot_config_api = require( __dirname + "/controllers/slot_config");
-var slot_config_r = require(__dirname + "/router/slot_config_r");
+var upload_api = require( __dirname + "/controllers/pictures");
+var slot_config_api = require( __dirname + "/controllers/slot_config_api");
+var slot_config = require(__dirname + "/controllers/slot_config");
 
 var cropFolder = "/" + setting.cropFolder.replace(setting.absolutePath, "").replace("/", "");
 
@@ -18,9 +18,9 @@ app.use("/public/cropped_images",express.static(__dirname + cropFolder));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use("/api/upload", upload_router);
+app.use("/api/upload", upload_api);
 app.use("/api/config",slot_config_api);
-app.use("/slot_config", slot_config_r);
+app.use("/slot_config", slot_config);
 
 var http = require('http').Server(app);
 var io = require('socket.io')(http);

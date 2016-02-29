@@ -42,15 +42,26 @@
 						// var queryDispString = "http://localhost:3000" + '/api/config/save_display?';
 						// var queryString = "http://localhost:3000" + '/api/config/save?';
 
+						<%- "var width = " + img_width + ";" %>
+						<%- "var height = " + img_height + ";" %>
+
 						var i = 0;
 						$.each(areas, function (id, area) {
-							queryString += 'data' + i + '=' + areaToString(area).replace('<br />', '').replace('x',' ').replace(':','').replace(':', ' ').split(' ') + '&';
+							//round 2 decimal
+							var propX = Math.round( ( area.x * 100 / width ) * 100) / 100;
+							var propY = Math.round( ( area.y * 100 / height ) * 100) / 100;
+							var propWidth = Math.round( ( area.width * 100 / width ) * 100) / 100;
+							var propHeight = Math.round( ( area.height * 100 / height ) * 100) / 100;
+
+							queryString += 'data' + i + '=' + area.id + "," + propX + "," + propY + "," + propWidth + "," + propHeight + "&";
 							i++;
+							alert(area.id);
+							// alert( Math.round(107.97 * 10) / 10)
 						});
 
 						i = 0;
 						$.each(areasDisp, function (id, area) {
-							queryDispString += 'data' + i + '=' + areaToString(area).replace('<br />', '').replace('x',' ').replace(':','').replace(':', ' ').split(' ') + '&';
+							queryDispString += 'data' + i + '=' + area.id + "," + area.x + "," + area.y + "," + area.width + "," + area.height + "&";
 							i++;
 						});
 
