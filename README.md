@@ -10,26 +10,26 @@
 #### * Structure of Processing in The System
 
   - CarParkingSpaceServer/
-    - setting.js            ###### The setting file in project
+    - setting.js                  ###### The setting file in project
     - config/
-      - descriptor.model    ###### SVM's model used in libsvm  
-      - dictionary.yml      ###### Dictionary for Bag of Visual Words
-      - slot_pos.csv        ###### Position of car parking slot marked by user
-    - upload/               ###### Containing all uploaded image
-    - cropped_images/       ###### Containing cropped image from the first stage
-    - fragmented_images/    ###### Containing fragmented image (by slot position) from the second stage
-    - temp/                 ###### Containing all temp file and ressult from prediction
+      - descriptor.model          ###### SVM's model used in libsvm  
+      - dictionary.yml            ###### Dictionary for Bag of Visual Words
+      - slot_pos.csv              ###### Position of car parking slot marked by user
+    - upload/                     ###### Containing all uploaded image
+    - cropped_images/             ###### Containing cropped image from the first stage
+    - fragmented_images/          ###### Containing fragmented image (by slot position) from the second stage
+    - temp/                       ###### Containing all temp file and ressult from prediction
     - xfiles/
-      - crop-image          ###### Compiled c++ file which is used for cropping an image
-      - fragment-image      ###### Compiled c++ file which is used for fragmenting an image
-      - natsort             ###### Compiled c++ file which is used for sorting file name
-      - sift-test           ###### Compiled c++ file which is used for extracting feature from image
-      - svm-predict         ###### Compiled c++ file which is used for predicting result from feature
-      - xcropping.js        ###### Nodejs file to execute crop-image
-      - xfragment.js        ###### Nodejs file to execute fragment-image
-      - xsift.js            ###### Nodejs file to execute sift-test
-      - xsvm.js             ###### Nodejs file to execute svm-predict
-      - upload_image_watcher.js  ###### Nodejs file to watch upload folder and process all stage
+      - crop-image                ###### Compiled c++ file which is used for cropping an image
+      - fragment-image            ###### Compiled c++ file which is used for fragmenting an image
+      - natsort                   ###### Compiled c++ file which is used for sorting file name
+      - sift-test                 ###### Compiled c++ file which is used for extracting feature from image
+      - svm-predict               ###### Compiled c++ file which is used for predicting result from feature
+      - xcropping.js              ###### Nodejs file to execute crop-image
+      - xfragment.js              ###### Nodejs file to execute fragment-image
+      - xsift.js                  ###### Nodejs file to execute sift-test
+      - xsvm.js                   ###### Nodejs file to execute svm-predict
+      - upload_image_watcher.js   ###### Nodejs file to watch upload folder and process all stage
 
 #### * How it works
   1. When user uploads an image from drone. An uploaded image will catched by upload_image_watcher.js

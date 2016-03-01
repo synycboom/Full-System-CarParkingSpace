@@ -1,4 +1,5 @@
 var setting  = require('../setting.js'); 
+var fs = require("fs");
 var rmdir = require( 'rmdir' );
 var chokidar = require('chokidar');
 var mkdirp = require('mkdirp');
@@ -9,7 +10,8 @@ var svm = require('./xsvm.js');
 
 var folderToWatch = setting.uploadFolder;
 
-var watcher = chokidar.watch(folderToWatch, {ignored: /^\./, persistent: true, usePolling: true});
+//awaitWriteFinish is important option: to wait for entire file has been written
+var watcher = chokidar.watch(folderToWatch, {ignored: /^\./, persistent: true, usePolling: true, awaitWriteFinish: true});
 
 console.log("watching '"+ folderToWatch +"' folder ...");
 
@@ -34,6 +36,8 @@ watcher
 function onDel(){
 	
 }
+
+
 
 function onStartFragment(err, inputFile){
 	console.log("crop success");
