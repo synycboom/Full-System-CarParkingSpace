@@ -19,7 +19,7 @@ module.exports = {
 	/******************************************* Files ***********************************************/
 	
 	dictionaryFile: absolutePath + "config/dictionary.yml",
-	modelFile: absolutePath + "config/descriptor.model",
+	modelFile: absolutePath + "config/svm.model",
 	csvFile: absolutePath + "config/slot_pos.csv",
 	csvDispFile: absolutePath + "config/disp.csv",
 

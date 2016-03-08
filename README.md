@@ -12,7 +12,7 @@
   - CarParkingSpaceServer/
     - setting.js                  ###### The setting file in project
     - config/
-      - descriptor.model          ###### SVM's model used in libsvm  
+      - svm.model          ###### SVM's model used in libsvm  
       - dictionary.yml            ###### Dictionary for Bag of Visual Words
       - slot_pos.csv              ###### Position of car parking slot marked by user
     - upload/                     ###### Containing all uploaded image
