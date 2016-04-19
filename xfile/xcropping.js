@@ -1,7 +1,7 @@
 var spawn = require('child_process').spawn;
 var method = {
 
-	crop:function(inputFile, outputFile, callback){
+	crop:function(inputFile, outputFile, slotData, callback){
 
 			var child = spawn('./crop-image',[inputFile, outputFile]);
 			var err = false;
@@ -19,7 +19,7 @@ var method = {
 			);
 
 			child.on('close', function(code) {
-	    		callback(err,outputFile);
+	    		callback(err,outputFile,slotData);
 			});
 		}
 

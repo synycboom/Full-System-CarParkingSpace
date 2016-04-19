@@ -11,6 +11,8 @@ module.exports = {
 	tempFolder: absolutePath + "temp/",
 	configFolder: absolutePath + "config/",
 	uploadFolder: absolutePath + "upload/",
+	userDataFolder: absolutePath + "user_data/",
+	dbFolder: absolutePath + "db/",
 
 	trainingSetFolder: absolutePath + "traning_set/",
 	carSetFolder: absolutePath +    "traning_set/car_set/",

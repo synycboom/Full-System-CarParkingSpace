@@ -2,7 +2,7 @@ var setting = require('../setting.js');
 var spawn = require("child_process").spawn;
 
 var method = {
-	predict: function(inputFile, outputFile, callback){
+	predict: function(inputFile, outputFile, slotData, callback){
 		var child = spawn('./svm-predict',[inputFile, setting.modelFile, outputFile]);
 		var err = false;
 		child.stdout.on('data', 
@@ -19,7 +19,7 @@ var method = {
 		);
 
 		child.on('close', function(code) {
-    		callback(err,outputFile);
+    		callback(err,outputFile, slotData);
 		});
 	}
 }

@@ -2,7 +2,7 @@ var spawn = require('child_process').spawn;
 var setting = require('../setting.js');
 
 var method = {
-	fragment: function(inputFile, outputPath, callback){
+	fragment: function(inputFile, outputPath, slotData, callback){
 		var child = spawn('./fragment-image',[setting.csvFile,inputFile, outputPath]);
 		var err = false;
 		child.stdout.on('data', 
@@ -19,7 +19,7 @@ var method = {
 		);
 
 		child.on('close', function(code) {
-    		callback(err,outputPath);
+    		callback(err,outputPath, slotData);
 		});
 	}
 }
