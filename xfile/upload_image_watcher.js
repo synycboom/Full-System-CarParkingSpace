@@ -14,6 +14,7 @@ var DroneRegisterParking = require('../app/models/drone_register_parking');
 var DroneServiceParking = require('../app/models/drone_service_parking');
 var MLServiceParking = require('../app/models/ml_service_parking');
 var WebUserToken = require('../app/models/web_user_token');
+var WebRegisterParking = require('../app/models/web_register_parking');
 
 mongoose.connect(configDB.url); 
 
@@ -61,17 +62,21 @@ watcher
 								var outF = setting.userDataFolder + dat.username + "/register/" + out;
 								cropping.crop(inputFile,outF,{},onIgnore);
 								cropping.crop(inputFile,outputFile,{},onIgnore);
+
+								//update path of image
+								DroneRegisterParking.update({token: data.token, imageName: data.imageName}, {path: outF}, {multi: false}, function(err, numAffected){});
+
 							}
 						});
 				    });
                 }
             } else {
-            	console.log("Not Found");
+            	console.log(filename + " Not Found");
                 return false;
             }
         });   
 
-		//for register image
+		//for service image
 		//check if this image has been processed
 		DroneServiceParking.findOne({ imageName: filename }, function(err, data) {
             if (err)
@@ -94,17 +99,19 @@ watcher
 								var outF = setting.userDataFolder + dat.username + "/service/" + out;
 
 								filename = filename.replace("drone1-", "").replace(".jpg", "");
-								var slotData = {token: dat.token, username: dat.username, name: dat.name,captureDate: filename};
+								var slotData = {token: dat.token, username: dat.username, parkinglotName: dat.parkinglotName,captureDate: filename};
 								cropping.crop(inputFile,outF,{},onIgnore);
 								//continue to process
                 				cropping.crop(inputFile,outputFile,slotData,onStartFragment);
-								
+								//update path of image
+								console.log(outF);
+								DroneServiceParking.update({token: data.token, imageName: data.imageName}, {path: outF}, {multi: false}, function(err, numAffected){});
 							}
 						});
 				    });
                 }
             } else {
-            	console.log("Not Found");
+            	console.log(filename + " Not Found");
                 return false;
             }
         });   
@@ -131,7 +138,23 @@ function onStartFragment(err, inputFile, slotData){
 
 	var outputPath = setting.fragmentFolder + out + "/";
 	mkdirp(outputPath, function(err) {});
-	fragmenting.fragment(inputFile,outputPath, slotData,onStartSiftNow);
+
+	WebRegisterParking.findOne({token: slotData.token},function(err, data){
+		if(err) console.log(err);
+		if(data){
+			var csvFormat = "";
+			for(var i = 0; i < data.parkingView.length; i++){
+				csvFormat += data.parkingView[i].slotID
+					+ "," +  data.parkingView[i].x
+					+ "," +  data.parkingView[i].y
+					+ "," +  data.parkingView[i].width
+					+ "," +  data.parkingView[i].height
+					+ " ";
+			}
+		}
+		console.log(csvFormat);
+		fragmenting.fragment(csvFormat,inputFile,outputPath, slotData,onStartSiftNow);
+	});
 }
 
 function onStartSiftNow(err,inputPath, slotData){
@@ -176,7 +199,7 @@ function onSVMSuccess(err, outputFile, slotData){
 
 	  var newRes = new MLServiceParking();
 	  newRes.token = slotData.token;
-	  newRes.token = slotData.name;
+	  newRes.parkinglotName = slotData.parkinglotName;
 	  newRes.captureDate = slotData.captureDate;
 	  newRes.parkingDetail = {
 	  	carCount: carCount,

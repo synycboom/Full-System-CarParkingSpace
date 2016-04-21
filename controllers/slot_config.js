@@ -14,7 +14,6 @@ router.get('/edit/:img_name', function(req, res) {
 	var imgName = req.params.img_name;
 	var dimensions = sizeOf(setting.cropFolder + imgName);
 	res.render('slot_config/slot_selection', {
-	    selected_img: imgName,
 	    img_width: dimensions.width,
 	    img_height: dimensions.height,
 	    port: setting.port

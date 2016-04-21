@@ -4,16 +4,19 @@ var express = require('express')
   , router = express.Router()
   , multer = require('multer');
 
-router.get('/save', function(req, res) {
-	var _csv = csv();
-	var dataObj = req.query;
-	var dataArr = [];
+// router.get('/save', function(req, res) {
+// 	var _csv = csv();
+// 	var dataObj = req.query;
+// 	var dataArr = [];
 
-	for(key in dataObj){
-		dataArr.push(dataObj[key].split(","));
-	}
-	_csv.from.array(dataArr).to.path(setting.csvFile);
-});
+// 	for(key in dataObj){
+// 		dataArr.push(dataObj[key].split(","));
+// 	}
+
+// 	 res.setHeader('Content-Type', 'application/json');
+// 	 res.send(dataArr);
+// 	// _csv.from.array(dataArr).to.path(setting.csvFile);
+// });
 
 router.get('/save_display', function(req, res) {
 	

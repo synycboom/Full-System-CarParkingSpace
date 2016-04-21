@@ -1,18 +1,32 @@
 var system_controller = require("../controllers/system_controller");
-
+var sizeOf = require('image-size');
+var setting = require('../setting.js');
 module.exports = function(app){
 
 
     app.get('/add_new_parking', isLoggedIn,function(req, res) {
-
-        // render the page and pass in any flash data if it exists
         res.render('dashboard_add_new_parking.ejs', { message: "" }); 
     });
 
     app.get('/view_all_parking', isLoggedIn,function(req, res) {
-
-        // render the page and pass in any flash data if it exists
         res.render('dashboard_view_all_parking.ejs'); 
+    });
+
+    app.get('/get_all_parking', isLoggedIn,function(req, res) {
+        //TODO response token, parkingName, path for a specific username
+        var username = req.user.local.username;
+        system_controller.getAllParkingConfigDetail(username, function(result){
+            res.setHeader('Content-Type', 'application/json');
+            res.send(JSON.stringify(result));
+        });
+    });
+
+    app.get('/get_all_token', isLoggedIn,function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        var username = req.user.local.username;
+        system_controller.getAllUserToken(username, function(result){
+            res.send(JSON.stringify(result));
+        });
     });
 
     app.post('/gen_token',isLoggedIn, function(req, res){
@@ -22,7 +36,7 @@ module.exports = function(app){
     	var longtitude = req.body.longtitude;
     	var token = (S4() + "-" + S4()).toLowerCase();
     	var data = {
-    		name: name,
+    		parkinglotName: name,
     		username: username,
     		latitude: latitude,
     		longtitude: longtitude,
@@ -32,8 +46,19 @@ module.exports = function(app){
     	system_controller.insertToken(data,function(result){
     		res.render('dashboard_add_new_parking.ejs', {message: result, token: token});
     	});
-    	
-    	
+    });
+
+    app.post('/save', function(req, res) {
+        var dataObj = req.body;
+
+        system_controller.saveConfigPosition(dataObj, function(result){
+            console.log(result);
+            res.send(dataObj);
+        });
+        console.log(dataObj);
+
+        
+        // _csv.from.array(dataArr).to.path(setting.csvFile);
     });
 }
 

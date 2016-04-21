@@ -28,7 +28,7 @@
 
 <body>
 
-    <div id="wrapper">
+    <div id="wrapper1">
 
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
@@ -80,6 +80,11 @@
 
                     </div>
                 </div>
+
+                <br>
+                <br>
+                <br>
+                <div class="row" id="all-token"></div>
             </div>
         </div>
         <!-- /#page-content-wrapper -->
@@ -95,10 +100,21 @@
 
     <!-- Menu Toggle Script -->
     <script>
+    $.get("/get_all_token",{},function(result){
+        // alert(JSON.stringify(result));
+        var html = "";
+        
+        for(var i = 0; i < result.length; i++){
+            html += "<span class='label label-info'>" + "TOKEN: " + result[i].token + " ParkinglotName: " + result[i].parkinglotName + "</span><br>";
+        }
+        $("#all-token").html(html);
+    });
+
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
     });
+
     </script>
 
 </body>

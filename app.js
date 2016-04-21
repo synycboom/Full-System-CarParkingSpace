@@ -13,6 +13,7 @@ var cropFolder = "/" + setting.cropFolder.replace(setting.absolutePath, "").repl
 app.use("/public/css",express.static(__dirname + '/public/css'));
 app.use("/public/images",express.static(__dirname + '/public/images'));
 app.use("/public/js",express.static(__dirname + '/public/js'));
+app.use("/user_data/",express.static(__dirname + '/user_data/'));
 app.use("/public/cropped_images",express.static(__dirname + cropFolder));
 
 app.set('views', path.join(__dirname, 'views'));

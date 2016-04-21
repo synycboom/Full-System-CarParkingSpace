@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var web_register_parking_Schema = mongoose.Schema({
 	token: String,
-	name: String,
+	parkinglotName: String,
 	parkingView: [
 		{
 			slotID: String,

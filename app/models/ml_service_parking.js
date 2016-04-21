@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var ml_service_parking_Schema = mongoose.Schema({
 	token: String,
-	name: String,
+	parkinglotName: String,
 	captureDate: String,
 	parkingDetail: {
 		carCount: String,

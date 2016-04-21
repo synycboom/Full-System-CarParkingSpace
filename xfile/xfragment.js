@@ -2,8 +2,8 @@ var spawn = require('child_process').spawn;
 var setting = require('../setting.js');
 
 var method = {
-	fragment: function(inputFile, outputPath, slotData, callback){
-		var child = spawn('./fragment-image',[setting.csvFile,inputFile, outputPath]);
+	fragment: function(csvPos,inputFile, outputPath, slotData, callback){
+		var child = spawn('./fragment-image',[csvPos,inputFile, outputPath]);
 		var err = false;
 		child.stdout.on('data', 
 		    function (data) {
