@@ -55,9 +55,11 @@ var method = {
                                 if(userData[i].token == parkingData[j].token){
                                     var path = parkingData[j].path;
                                     var dimensions = sizeOf(path);
+                                    var dateTime = parkingData[j].imageName.replace("drone1-", "").replace(/(.jpg)||(.png)/gi, "");
                                     var element = {
                                         img_width: dimensions.width,
                                         img_height: dimensions.height,
+                                        dateTime: dateTime,
                                         token: userData[i].token,
                                         parkinglotName: userData[i].parkinglotName,
                                         path: "../" + path.substring(path.indexOf("user_data"), path.length)

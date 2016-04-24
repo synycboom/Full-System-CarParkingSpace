@@ -60,11 +60,8 @@ watcher
 							if(dat){
 								mkdirp(setting.userDataFolder + dat.username + "/register/");
 								var outF = setting.userDataFolder + dat.username + "/register/" + out;
-								cropping.crop(inputFile,outF,{},onIgnore);
+								cropping.crop(inputFile,outF,{},onIgnore, onStartRegisterUpdate,data);
 								cropping.crop(inputFile,outputFile,{},onIgnore);
-
-								//update path of image
-								DroneRegisterParking.update({token: data.token, imageName: data.imageName}, {path: outF}, {multi: false}, function(err, numAffected){});
 
 							}
 						});
@@ -100,12 +97,9 @@ watcher
 
 								filename = filename.replace("drone1-", "").replace(".jpg", "");
 								var slotData = {token: dat.token, username: dat.username, parkinglotName: dat.parkinglotName,captureDate: filename};
-								cropping.crop(inputFile,outF,{},onIgnore);
+								cropping.crop(inputFile,outF,{},onIgnore, onStartServiceUpdate,data);
 								//continue to process
                 				cropping.crop(inputFile,outputFile,slotData,onStartFragment);
-								//update path of image
-								console.log(outF);
-								DroneServiceParking.update({token: data.token, imageName: data.imageName}, {path: outF}, {multi: false}, function(err, numAffected){});
 							}
 						});
 				    });
@@ -124,7 +118,16 @@ watcher
 
 
 function onIgnore(){}
-
+function onStartServiceUpdate(data, outF){
+	DroneServiceParking.update({token: data.token, imageName: data.imageName}, {path: outF}, {multi: false}, function(err, numAffected){
+		console.log("num affected: " + JSON.stringify(numAffected));
+	});
+}
+function onStartRegisterUpdate(data, outF){
+	DroneRegisterParking.update({token: data.token, imageName: data.imageName}, {path: outF}, {multi: false}, function(err, numAffected){
+		console.log("num affected: " + JSON.stringify(numAffected));
+	});
+}
 
 
 function onStartFragment(err, inputFile, slotData){
@@ -151,9 +154,10 @@ function onStartFragment(err, inputFile, slotData){
 					+ "," +  data.parkingView[i].height
 					+ " ";
 			}
+			fragmenting.fragment(csvFormat,inputFile,outputPath, slotData,onStartSiftNow);
 		}
-		console.log(csvFormat);
-		fragmenting.fragment(csvFormat,inputFile,outputPath, slotData,onStartSiftNow);
+		else console.log("Can't Find Slot Position");
+		
 	});
 }
 

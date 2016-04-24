@@ -38,25 +38,28 @@
 
             $.get("/get_all_parking",{},function(result){
                 console.log(JSON.stringify(result));
-
-                var html = "";
-                for(var i = 0; i < result.length; i++){
-                    html += "<a href='#' class='edit-slot'" 
-                    + " token='" + result[i].token + "'"
-                    + " parkinglotName='" + result[i].parkinglotName + "'"
-                    + " path='" + result[i].path + "'"
-                    + " img_width='" + result[i].img_width + "'"
-                    + " img_height='" + result[i].img_height + "'"
-                    + " >" + result[i].parkinglotName + "</a><br>";
-                }
-                $("#all-parking").html(html);
+                generateTable(result);
                 $(".edit-slot").click(function(e){
                     e.preventDefault();
+                    $('#table').hide();
+
+                    var round = 0;
+                    $(this).closest("tr").children("td").each(function() {
+                        var cellText = $(this).html();   
+                        switch(round){
+                            case 0: setting.token = cellText;
+                                    break;
+                            case 1: setting.parkinglotName = cellText;
+                                    break;
+                            default: break;
+                        }
+                        round++; 
+                    });
+                    
                     var path = $( this ).attr( "path" );
-                    setting.token = $(this).attr("token");
-                    setting.parkinglotName = $(this).attr("parkinglotName");
                     setting.img_width = $(this).attr("img_width");
                     setting.img_height = $(this).attr("img_height");
+
                     $('#select-area').show();
                     $('#slot_selection').attr("src", path);
                 });
@@ -111,7 +114,7 @@
                         });
                         // alert( Math.round(107.97 * 10) / 10)
                     });
-
+                    alert(dataToSend);
                     $.post('/save',dataToSend,function(result){});
                 }
             });
@@ -209,6 +212,56 @@
             output(text);
         };
 
+        function generateTable(result){
+            var table = document.createElement('table');
+            var thead = document.createElement('thead');
+            var tbody = document.createElement('tbody');
+            var thead_tr = document.createElement('tr');
+            var th1 = document.createElement('th');
+            var th2 = document.createElement('th');
+            var th3 = document.createElement('th');
+            var column1 = document.createTextNode('Token');
+            var column2 = document.createTextNode('Name');
+            var column3 = document.createTextNode('TimeStamp');
+            th1.appendChild(column1);
+            th2.appendChild(column2);
+            th3.appendChild(column3);
+            thead_tr.appendChild(th1);
+            thead_tr.appendChild(th2);
+            thead_tr.appendChild(th3);
+            thead.appendChild(thead_tr);
+
+            for (var i = 0; i < result.length; i++){
+                var tr = document.createElement('tr');   
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
+                var token = document.createTextNode(result[i].token);
+                var parkinglotName = document.createTextNode(result[i].parkinglotName);
+                var dateTime = document.createTextNode(result[i].dateTime);
+                var a = document.createElement('a');
+                a.setAttribute('href', '#');
+                a.setAttribute('path', result[i].path);
+                a.setAttribute('img_width', result[i].img_width);
+                a.setAttribute('img_height', result[i].img_height);
+                a.setAttribute('class', 'edit-slot');
+                a.appendChild(dateTime);
+
+                td1.appendChild(token);
+                td2.appendChild(parkinglotName);
+                td3.appendChild(a);
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+
+                tbody.appendChild(tr);
+            }
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            table.setAttribute("class", "table table-striped");
+            document.getElementById('table').appendChild(table);
+        }
+
     </script>
 
 </head>
@@ -242,33 +295,22 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <div class="container-fluid">
-                <div class="row" id="all-parking"></div>
+
+                <div id="table"></div>
 
                 <div id='select-area'>
                     <div id="wrapper">
-                    <h1>Slot Selector</h1>
-                    <div class='image-decorator'>
-                        <img alt='Image principale' id='slot_selection' src=''/>
+                        <div class='image-decorator'>
+                            <img alt='Image principale' id='slot_selection' src=''/>
+                        </div>
+                      
+                        <input type='button' id='btnView' value='Display areas' class='actionOn' />
+                        <input type='button' id='btnReset' value='Reset' class='actionOn' />
+                        <input type='button' id='btnSave' value='Save' class='actionOn'/>
+
+                        <div id='output' class='output'> </div>
+                       
                     </div>
-                    <table>
-                        <tr>
-                            <td class='actions'>
-                                <input type='button' id='btnView' value='Display areas' class='actionOn' />
-                                <!-- <input type='button' id='btnViewRel' value='Display relative' class='actionOn' /> -->
-                                <!-- <input type='button' id='btnNew' value='Add New' class='actionOn' /> -->
-                                <!-- <input type='button' id='btnNews' value='Add 2 New' class='actionOn' /> -->
-                                <input type='button' id='btnReset' value='Reset' class='actionOn' />
-                                <input type='button' id='btnSave' value='Save' class='actionOn'/>
-                                <!-- <input type='button' id='btnLoad' value='Load' class='actionOn'/> -->
-                                <!-- <input type='button' id='btnDestroy' value='Destroy' class='actionOn' /> -->
-                                <!-- <input type='button' id='btnCreate' value='Create' class='actionOff' /> -->
-                            </td>
-                            <td>
-                                <div id='output' class='output'> </div>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
                 </div>
 
 
