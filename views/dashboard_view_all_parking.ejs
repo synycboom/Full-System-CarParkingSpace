@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Simple Sidebar - Start Bootstrap Template</title>
+    <title>Parking Setup</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../public/css/bootstrap.min.css" rel="stylesheet">
@@ -35,10 +35,16 @@
 
             $('#select-area').hide();
             var setting = {};
-
+	
             $.get("/get_all_parking",{},function(result){
                 console.log(JSON.stringify(result));
-                generateTable(result);
+		var newD =  [];
+		for(var k = 0; k < result.length; k++){
+			if(typeof result[k].token !== "undefined")
+				newD.push(result[k]);
+		}
+		
+                generateTable(newD);
                 $(".edit-slot").click(function(e){
                     e.preventDefault();
                     $('#table').hide();

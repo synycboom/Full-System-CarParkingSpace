@@ -2,6 +2,7 @@ var setting = require('../setting.js');
 var WebUserToken = require('../app/models/web_user_token');
 var DroneRegisterParking = require('../app/models/drone_register_parking');
 var DroneServiceParking = require('../app/models/drone_service_parking');
+var image_proc = require('./image_proc_controller');
 
 var express = require('express')
   , router = express.Router()
@@ -33,7 +34,8 @@ var uploading = multer({
 //router.use(bodyParserHelper());  
 
 router.post('/register',uploading.single('drone1'), function(req, res) {
-  var token = req.body.token;
+  var token = req.body.token.replaceAll(/"/gi,"");
+  
   res.setHeader('Content-Type', 'application/json');
 
   WebUserToken.findOne({ 'token' : token }, function(err, data) {
@@ -52,17 +54,20 @@ router.post('/register',uploading.single('drone1'), function(req, res) {
                 newPic.save(function(err) {
                     if (err)
                         throw err;
-                    res.send(JSON.stringify({ uploadstatus: "ok" }));
+                    res.send({ uploadstatus: "ok" });
+                    console.log("Uploaded Sucess");
+		    image_proc(setting.uploadFolder + filename);
                 });
                 
             } else {
-                res.send(JSON.stringify({ uploadstatus: "There is no token" }));
+                res.send({ uploadstatus: "There is no token" });
+		console.log("Upload Failed");
              }
         });   
 });
 
 router.post('/service',uploading.single('drone1'), function(req, res) {
-  var token = req.body.token;
+  var token = req.body.token.replaceAll(/"/gi,"");
   res.setHeader('Content-Type', 'application/json');
 
   WebUserToken.findOne({ 'token' : token }, function(err, data) {
@@ -82,6 +87,7 @@ router.post('/service',uploading.single('drone1'), function(req, res) {
                     if (err)
                         throw err;
                     res.send(JSON.stringify({ uploadstatus: "ok" }));
+		    image_proc(setting.uploadFolder + filename);
                 });
                 
             } else {
@@ -90,5 +96,8 @@ router.post('/service',uploading.single('drone1'), function(req, res) {
         });   
 });
 
-
+String.prototype.replaceAll = function(search, replacement){
+	var target = this;
+	return target.split(search).join(replacement);
+}
 module.exports = router

@@ -3,7 +3,7 @@ var setting = require('../setting.js');
 var method = {
 
 	extractFeature:function(inputPath, outputfile, slotData, callback){
-			var child = spawn('./sift-test',[setting.dictionaryFile,inputPath, setting.natsortFile,outputfile]);
+			var child = spawn(setting.siftImageFile,[setting.dictionaryFile,inputPath, setting.natsortFile,outputfile]);
 			var err = false;
 			child.stdout.on('data', 
 			    function (data) {

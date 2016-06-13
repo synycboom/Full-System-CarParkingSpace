@@ -3,7 +3,7 @@ var setting = require('../setting.js');
 
 var method = {
 	fragment: function(csvPos,inputFile, outputPath, slotData, callback){
-		var child = spawn('./fragment-image',[csvPos,inputFile, outputPath]);
+		var child = spawn(setting.fragmentImageFile,[csvPos,inputFile, outputPath]);
 		var err = false;
 		child.stdout.on('data', 
 		    function (data) {

@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var user_token_Schema = mongoose.Schema({
 	token: String,
+	// hashToken: String,
 	parkinglotName: String,
 	username: String,
 	latitude: String,

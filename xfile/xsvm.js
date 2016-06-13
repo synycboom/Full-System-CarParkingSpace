@@ -3,7 +3,7 @@ var spawn = require("child_process").spawn;
 
 var method = {
 	predict: function(inputFile, outputFile, slotData, callback){
-		var child = spawn('./svm-predict',[inputFile, setting.modelFile, outputFile]);
+		var child = spawn(setting.svmImageFile,[inputFile, setting.modelFile, outputFile]);
 		var err = false;
 		child.stdout.on('data', 
 		    function (data) {

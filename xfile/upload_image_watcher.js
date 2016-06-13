@@ -39,6 +39,7 @@ watcher
 			out += "_croped.jpg";
 		var outputFile = setting.cropFolder + out;
 
+		console.log("This File: " + filename);
 		//for register image
 		//check if this image has been processed
 		DroneRegisterParking.findOne({ imageName: filename }, function(err, data) {

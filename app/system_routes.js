@@ -12,6 +12,45 @@ module.exports = function(app){
         res.render('dashboard_view_all_parking.ejs'); 
     });
 
+    app.post('/api/mobile/datamap',function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        var dataMap = {
+            MapDataRes: {
+                AllData: []
+            }
+        };
+        system_controller.getDataMap(function(result){
+            if(result != "NotExist"){
+                dataMap.MapDataRes.AllData = result;
+            }
+            console.log(JSON.stringify(dataMap));
+            res.send(dataMap);
+        });
+    });
+
+    app.post('/api/mobile/allparkingdetail',function(req, res) {
+        res.setHeader('Content-Type', 'application/json');console.log("AllParking");
+        system_controller.getAllParkingDetail(function(result){
+            console.log(result);
+            res.send(result);
+        });
+    });
+
+    app.post('/api/mobile/parkingdetail',function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        var token = req.body.token;
+
+        if(typeof token === "undefined"){
+            console.log("Token not exist");
+            res.send({});
+            return;
+        }
+        system_controller.getParkingDetail(token, function(result){
+            console.log(result);
+            res.send(result);
+        });
+    });
+
     app.get('/get_all_parking', isLoggedIn,function(req, res) {
         //TODO response token, parkingName, path for a specific username
         var username = req.user.local.username;
@@ -24,6 +63,7 @@ module.exports = function(app){
     app.get('/get_all_token', isLoggedIn,function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         var username = req.user.local.username;
+	console.log(username);
         system_controller.getAllUserToken(username, function(result){
             res.send(JSON.stringify(result));
         });
@@ -42,7 +82,6 @@ module.exports = function(app){
     		longtitude: longtitude,
     		token: token
     	};
-    	
     	system_controller.insertToken(data,function(result){
     		res.render('dashboard_add_new_parking.ejs', {message: result, token: token});
     	});
