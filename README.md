@@ -1,7 +1,7 @@
 ###Car Parking Space Detection System
   
 #### * Description
-  - a webserver for processing and manipulating images which are uploaded from drone
+  - a webserver for processing and manipulating images which are uploaded from a drone
   
 #### * Structure of This System
 
